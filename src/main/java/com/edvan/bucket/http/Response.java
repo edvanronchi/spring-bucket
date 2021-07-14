@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-
 public class Response {
 
     public ResponseEntity<?> success(String message, HttpStatus status, ObjectNode content) {

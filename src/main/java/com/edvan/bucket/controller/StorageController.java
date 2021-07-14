@@ -2,7 +2,6 @@ package com.edvan.bucket.controller;
 
 import com.edvan.bucket.service.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,6 +21,11 @@ public class StorageController {
     @GetMapping("/download/{fileName}")
     public ResponseEntity<?> downloadFile(@PathVariable String fileName) {
         return service.downloadFile(fileName);
+    }
+
+    @GetMapping("/bucket")
+    public ResponseEntity<?> listAll() {
+        return service.listAll();
     }
 
     @GetMapping("/view/{fileName}")

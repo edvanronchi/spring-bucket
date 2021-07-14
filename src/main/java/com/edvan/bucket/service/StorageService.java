@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.S3ObjectInputStream;
 import com.amazonaws.util.IOUtils;
 import com.edvan.bucket.http.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,18 @@ public class StorageService {
 
             return null;
         }
+    }
+
+    public ResponseEntity<?> listAll() {
+        ObjectMapper mapper = new ObjectMapper();
+
+        ArrayNode contentArray = mapper.createArrayNode();
+
+        s3Client.listObjects(bucketName).getObjectSummaries().forEach( i -> {
+            contentArray.add(mapper.createObjectNode().put("name", i.getKey()));
+        });
+
+        return new ResponseEntity<>(contentArray, HttpStatus.OK);
     }
 
     public ResponseEntity<?> viewFile(String fileName) {
